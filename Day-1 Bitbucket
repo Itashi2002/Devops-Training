@@ -721,3 +721,131 @@ d333f90 added change 1
 
 Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
 $ 15c871a (feature-1) recursive merge
+
+
+
+
+
+##########################################################################################################################################3
+Only commands:
+
+  201  touch.exe myfile.txt
+
+  221  git config --global user.name "Kulbhushan Mayer"
+  222  git config --global user.email "kulbhushan.mayer@gmail.com"
+
+  202  git status
+  203  git add myfile.txt
+  204  git status
+  205  git commit -m "adding new file"
+  206  git status
+  207  git log --oneline
+  208  echo "Current time is `date`" >> myfile.txt
+  209  cat myfile.txt
+  210  git status
+  211  git add myfile.txt
+  212  git commit -m "added change 1"
+  213  echo "############################################" >> myfile.txt
+  214  echo "Current time is `date`" >> myfile.txt
+  215  echo "############################################" >> myfile.txt
+  216  git add myfile.txt
+  217  git commit -m "added change 2"
+
+
+=================================================================================
+
+  224  echo "Current time is `date`" >> myfile.txt
+  225  echo "############################################" >> myfile.txt
+  226  git commit -am "added change 3"
+  227  touch README.md
+  228  echo "############################################" >> myfile.txt
+  229  git status
+  230  git status
+  231  git add README.md
+  232  git status
+  233  git add myfile.txt
+  234  git status
+  235  git commit -m "Added README with Topics" README.md
+  236  git log --oneline
+  237  git status
+  238  git commit -m "Updated for next git subcommand"
+  239  echo "##################### Next GIT Sub Command" >> myfile.txt
+  240  git commit -am "Updated for next git subcommand"
+  241  git status
+  242  git log --oneline
+
+===============================================================================
+
+  245  git log --oneline
+  246  cat myfile.txt
+  247  git reset <replace-with-change-id-upto-where-history-to-be reset>
+  248  git status
+  249  git log --oneline
+  251  git commit -m "reset history, should only be used till changes are in local repo" myfile.txt
+  252  git log --oneline
+  253  git commit -m "updated with Sub Commands" README.md
+  254  git log --oneline
+
+===============================================================================
+
+  256  mv myfile.txt day1.txt
+  257  git status
+  258  rm day1.txt
+  259  git status
+  260  ls -ltr
+  261  git restore myfile.txt
+  262  ls -ltr
+  263  git mv myfile.txt day1.txt
+  264  git status
+  265  git restore --staged day1.txt
+  266  git status
+  267  git restore --staged myfile.txt
+  268  git status
+  269  git restore myfile.txt
+  270  ls -ltr
+  271  rm -rf day1.txt
+  272  git status
+  273  git mv myfile.txt day1.txt
+  274  git status
+  275  git commit -m "renamed myfile.txt as day1.txt"
+
+================================================================================
+
+
+  277  git branch
+  278  git log --oneline
+  279  git branch feature-1
+  280  git log --oneline
+  281  git branch
+  282  git switch feature-1
+  283  git branch
+  289  echo "############################################" >> day1.txt
+  290  echo "##### Working on branches" >> day1.txt
+  291  git commit -m "change in feature-1 branch" day1.txt
+  292  git commit -m "updated subcommand" README.md
+  293  git log --oneline
+  294  git diff master feature-1
+  295  git diff feature-1 master
+  296  git log --oneline
+  297  git log --oneline master
+
+===============================================================================
+
+  299  git log --oneline master
+  300  git log --oneline
+  301  git switch master
+  302  git merge feature-1
+  303  git log --oneline
+  304  git commit -am "added merge subcommand"
+  305  git log --oneline
+  306  git switch feature-1
+  307  echo "##### Recursive Merge" >> day1.txt
+  308  git commit -am "recursive merge"
+  309  git log --oneline
+  310  git diff feature-1 master
+  311  git switch master
+  312  git merge feature-1
+  313  git log --oneline
+  314  git log --oneline feature-1
+
+
