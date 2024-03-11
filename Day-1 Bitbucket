@@ -1,0 +1,723 @@
+
+Admin@DESKTOP-32CE68O MINGW64 ~
+$ git --version
+git version 2.44.0.windows.1
+
+Admin@DESKTOP-32CE68O MINGW64 ~
+$ cd ~
+
+Admin@DESKTOP-32CE68O MINGW64 ~
+$ mkdir slf-p1-b2-mar24
+
+Admin@DESKTOP-32CE68O MINGW64 ~
+$ mkdir my-first-repo
+
+Admin@DESKTOP-32CE68O MINGW64 ~
+$ cd my-first-repo
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo
+$ git status
+fatal: not a git repository (or any of the parent directories): .git
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo
+$ pwd
+/c/Users/Admin/my-first-repo
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo
+$ git init
+Initialized empty Git repository in C:/Users/Admin/my-first-repo/.git/
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline
+fatal: your current branch 'master' does not have any commits yet
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ history
+    1  git --version
+    2  cd ~
+    3  mkdir slf-p1-b2-mar24
+    4  mkdir my-first-repo
+    5  cd my-first-repo
+    6  git status
+    7  pwd
+    8  git init
+    9  git log --oneline
+   10  git status
+   11  history
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ touch.exe myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        myfile.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git add myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   myfile.txt
+
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git commit -m "adding new file"
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'Admin@DESKTOP-32CE68O.(none)')
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git config --global user.email "itashi1903@gmail.com"
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git config --global user.name "Itashi20"
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git commit -m "adding new file"
+[master (root-commit) 05556d1] adding new file
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline
+05556d1 (HEAD -> master) adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ echo "Current time is `date`" >> myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  cat myfile.txt
+Current time is Sun Mar 10 23:46:50 PDT 2024
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   myfile.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git add myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git commit -m "added change 1"
+[master d333f90] added change 1
+ 1 file changed, 1 insertion(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  echo "############################################" >> myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  echo "Current time is `date`" >> myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  echo "############################################" >> myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git add myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git commit -m "added change 2"
+[master 4201263] added change 2
+ 1 file changed, 3 insertions(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ echo "Current time is `date`" >> myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ echo "############################################" >> myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git commit -am "added change 3"
+[master 7999fd2] added change 3
+ 1 file changed, 2 insertions(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$   touch README.md
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  echo "############################################" >> myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   myfile.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git add README.md
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   README.md
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   myfile.txt
+
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git add myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git commit -m "Added README with Topics" README.md
+[master 0c83f3a] Added README with Topics
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git log --oneline
+0c83f3a (HEAD -> master) Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git commit -m "Updated for next git subcommand"
+[master 49e7506] Updated for next git subcommand
+ 1 file changed, 1 insertion(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ echo "##################### Next GIT Sub Command" >> myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git commit -am "Updated for next git subcommand"
+[master ffec86c] Updated for next git subcommand
+ 1 file changed, 1 insertion(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline
+ffec86c (HEAD -> master) Updated for next git subcommand
+49e7506 Updated for next git subcommand
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ cat myfile.txt
+Current time is Sun Mar 10 23:46:50 PDT 2024
+############################################
+Current time is Sun Mar 10 23:48:53 PDT 2024
+############################################
+Current time is Mon Mar 11 00:08:52 PDT 2024
+############################################
+############################################
+##################### Next GIT Sub Command
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git reset 0c83f3a
+Unstaged changes after reset:
+M       myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   myfile.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline
+0c83f3a (HEAD -> master) Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$   git commit -m "reset history, should only be used till changes are in local repo" myfile.txt
+[master 244d777] reset history, should only be used till changes are in local repo
+ 1 file changed, 2 insertions(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline
+244d777 (HEAD -> master) reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git commit -m "updated with Sub Commands" README.md
+On branch master
+nothing to commit, working tree clean
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git log --oneline
+244d777 (HEAD -> master) reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  mv myfile.txt day1.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    myfile.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        day1.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ rm day1.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    myfile.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ ls -ltr
+total 1
+-rw-r--r-- 1 Admin 197121 9 Mar 11 00:11 README.md
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git restore myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ ls -ltr
+total 2
+-rw-r--r-- 1 Admin 197121   9 Mar 11 00:11 README.md
+-rw-r--r-- 1 Admin 197121 358 Mar 11 00:45 myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git mv myfile.txt day1.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        renamed:    myfile.txt -> day1.txt
+
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git restore --staged day1.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    myfile.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        day1.txt
+
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git restore --staged myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    myfile.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        day1.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git restore myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ ls -ltr
+total 3
+-rw-r--r-- 1 Admin 197121   9 Mar 11 00:11 README.md
+-rw-r--r-- 1 Admin 197121 358 Mar 11 00:45 day1.txt
+-rw-r--r-- 1 Admin 197121 358 Mar 11 00:47 myfile.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  rm -rf day1.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git staus
+git: 'staus' is not a git command. See 'git --help'.
+
+The most similar command is
+        status
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git mv myfile.txt day1.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        renamed:    myfile.txt -> day1.txt
+
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git commit -m "renamed myfile.txt as day1.txt"
+[master 31f6586] renamed myfile.txt as day1.txt
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename myfile.txt => day1.txt (100%)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git branch
+* master
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline
+31f6586 (HEAD -> master) renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git branch feature-1
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline
+31f6586 (HEAD -> master, feature-1) renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git switch feature-1
+Switched to branch 'feature-1'
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ git branch
+* feature-1
+  master
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$  echo "############################################" >> day1.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$  echo "##### Working on branches" >> day1.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ git commit -m "change in feature-1 branch" day1.txt
+[feature-1 af479d6] change in feature-1 branch
+ 1 file changed, 2 insertions(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$  git commit -m "updated subcommands" README.md
+[feature-1 58ce944] updated subcommands
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ git log --oneline
+58ce944 (HEAD -> feature-1) updated subcommands
+af479d6 change in feature-1 branch
+31f6586 (master) renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ git diff master feature-1
+diff --git a/README.md b/README.md
+index 9a3e3f1..0c9e3be 100644
+--- a/README.md
++++ b/README.md
+@@ -1 +1,3 @@
+-#new file
+\ No newline at end of file
++#new file^M
++^M
++made changes for branch
+\ No newline at end of file
+diff --git a/day1.txt b/day1.txt
+index 77bd047..46ac544 100644
+--- a/day1.txt
++++ b/day1.txt
+@@ -6,3 +6,5 @@ Current time is Mon Mar 11 00:08:52 PDT 2024
+ ############################################
+ ############################################
+ ##################### Next GIT Sub Command
++############################################
++##### Working on branches
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$  git diff feature-1 master
+diff --git a/README.md b/README.md
+index 0c9e3be..9a3e3f1 100644
+--- a/README.md
++++ b/README.md
+@@ -1,3 +1 @@
+-#new file
+-
+-made changes for branch
+\ No newline at end of file
++#new file
+\ No newline at end of file
+diff --git a/day1.txt b/day1.txt
+index 46ac544..77bd047 100644
+--- a/day1.txt
++++ b/day1.txt
+@@ -6,5 +6,3 @@ Current time is Mon Mar 11 00:08:52 PDT 2024
+ ############################################
+ ############################################
+ ##################### Next GIT Sub Command
+-############################################
+-##### Working on branches
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ git log --oneline
+58ce944 (HEAD -> feature-1) updated subcommands
+af479d6 change in feature-1 branch
+31f6586 (master) renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$  git log --oneline master
+31f6586 (master) renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ git switch master
+Switched to branch 'master'
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git merge feature-1
+Updating 31f6586..58ce944
+Fast-forward
+ README.md | 4 +++-
+ day1.txt  | 2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git log --oneline
+58ce944 (HEAD -> master, feature-1) updated subcommands
+af479d6 change in feature-1 branch
+31f6586 renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$  git commit -am "added merge subcommand"
+[master 70348be] added merge subcommand
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline
+70348be (HEAD -> master) added merge subcommand
+58ce944 (feature-1) updated subcommands
+af479d6 change in feature-1 branch
+31f6586 renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git switch feature-1
+Switched to branch 'feature-1'
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ echo "##### Recursive Merge" >> day1.txt
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ git commit -am "recursive merge"
+[feature-1 15c871a] recursive merge
+ 1 file changed, 1 insertion(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$  git log --oneline
+15c871a (HEAD -> feature-1) recursive merge
+58ce944 updated subcommands
+af479d6 change in feature-1 branch
+31f6586 renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ git diff feature-1 master
+diff --git a/README.md b/README.md
+index 0c9e3be..c1890ca 100644
+--- a/README.md
++++ b/README.md
+@@ -1,3 +1,5 @@
+ #new file
+
+-made changes for branch
+\ No newline at end of file
++made changes for branch^M
++^M
++#branches switch change^M
+diff --git a/day1.txt b/day1.txt
+index 0a10cad..46ac544 100644
+--- a/day1.txt
++++ b/day1.txt
+@@ -8,4 +8,3 @@ Current time is Mon Mar 11 00:08:52 PDT 2024
+ ##################### Next GIT Sub Command
+ ############################################
+ ##### Working on branches
+-##### Recursive Merge
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (feature-1)
+$ git switch master
+Switched to branch 'master'
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git merge feature-1
+Merge made by the 'ort' strategy.
+ day1.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline
+dcc5e65 (HEAD -> master) Merge branch Merge branch 'feature-1'
+15c871a (feature-1) recursive merge
+70348be added merge subcommand
+58ce944 updated subcommands
+af479d6 change in feature-1 branch
+31f6586 renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ git log --oneline master
+dcc5e65 (HEAD -> master) Merge branch Merge branch 'feature-1'
+15c871a (feature-1) recursive merge
+70348be added merge subcommand
+58ce944 updated subcommands
+af479d6 change in feature-1 branch
+31f6586 renamed myfile.txt as day1.txt
+244d777 reset history, should only be used till changes are in local repo
+0c83f3a Added README with Topics
+7999fd2 added change 3
+4201263 added change 2
+d333f90 added change 1
+05556d1 adding new file
+
+Admin@DESKTOP-32CE68O MINGW64 ~/my-first-repo (master)
+$ 15c871a (feature-1) recursive merge
