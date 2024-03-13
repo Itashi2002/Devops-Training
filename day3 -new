@@ -1,0 +1,209 @@
+Admin@DESKTOP-32CE68O MINGW64 /
+$ cd "C:\Users\Admin\slf-p1-b2-mar24\slf-java-b2-p1"
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ gradle war
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Directory 'C:\Users\Admin\slf-p1-b2-mar24\slf-java-b2-p1' does not contain a Gradle build.
+
+A Gradle build should contain a 'settings.gradle' or 'settings.gradle.kts' file in its root directory. It may also contain a 'build.gradle' or 'build.gradle.kts' file.
+
+To create a new Gradle build in this directory run 'gradle init'
+
+For more information about the 'init' task, please refer to https://docs.gradle.org/8.6/userguide/build_init_plugin.html in the Gradle documentation.
+
+For more details on creating a Gradle build, please refer to https://docs.gradle.org/8.6/userguide/tutorial_using_tasks.html in the Gradle documentation.
+
+* Try:
+> Run gradle init to create a new Gradle build in this directory.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 10s
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ls
+Dockerfile  Procfile  README.md  build.gradle.txt  pom.xml  src/  system.properties
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ls
+Dockerfile  Procfile  README.md  build.gradle.txt  pom.xml  src/  system.properties
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ls
+Dockerfile  Procfile  README.md  build.gradle  pom.xml  src/  system.properties
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ gradle war
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 22s
+3 actionable tasks: 3 executed
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ export SONAR_TOKEN=825732d0d77eab89ce731ed0138e54c02dd20269
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ echo $SONAR_TOKEN
+825732d0d77eab89ce731ed0138e54c02dd20269
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ^C
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ gradle sonar
+
+> Configure project :
+The 'sonarqube' task depends on compile tasks. This behavior is now deprecated and will be removed in version 5.x. To avoid implicit compilation, set property 'sonar.gradle.skipCompile' to 'true' and make sure your project is compiled, before analysis has started.
+The 'sonar' task depends on compile tasks. This behavior is now deprecated and will be removed in version 5.x. To avoid implicit compilation, set property 'sonar.gradle.skipCompile' to 'true' and make sure your project is compiled, before analysis has started.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 45s
+3 actionable tasks: 1 executed, 2 up-to-date
+<-------------> 0% WAITING
+> IDLE
+> IDLE
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ gradle sonar
+
+> Configure project :
+The 'sonarqube' task depends on compile tasks. This behavior is now deprecated and will be removed in version 5.x. To avoid implicit compilation, set property 'sonar.gradle.skipCompile' to 'true' and make sure your project is compiled, before analysis has started.
+The 'sonar' task depends on compile tasks. This behavior is now deprecated and will be removed in version 5.x. To avoid implicit compilation, set property 'sonar.gradle.skipCompile' to 'true' and make sure your project is compiled, before analysis has started.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 50s
+3 actionable tasks: 1 executed, 2 up-to-date
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ gradle clean test
+
+> Configure project :
+The 'sonarqube' task depends on compile tasks. This behavior is now deprecated and will be removed in version 5.x. To avoid implicit compilation, set property 'sonar.gradle.skipCompile' to 'true' and make sure your project is compiled, before analysis has started.
+The 'sonar' task depends on compile tasks. This behavior is now deprecated and will be removed in version 5.x. To avoid implicit compilation, set property 'sonar.gradle.skipCompile' to 'true' and make sure your project is compiled, before analysis has started.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 3 executed
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ gradle clean test
+
+> Configure project :
+The 'sonarqube' task depends on compile tasks. This behavior is now deprecated and will be removed in version 5.x. To avoid implicit compilation, set property 'sonar.gradle.skipCompile' to 'true' and make sure your project is compiled, before analysis has started.
+The 'sonar' task depends on compile tasks. This behavior is now deprecated and will be removed in version 5.x. To avoid implicit compilation, set property 'sonar.gradle.skipCompile' to 'true' and make sure your project is compiled, before analysis has started.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 5s
+3 actionable tasks: 3 executed
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ cd ..
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24
+$ git clone git@bitbucket.org:practice-devops1/gradle-junit-jacoco.git
+Cloning into 'gradle-junit-jacoco'...
+Receiving objects: 100% (132/132), 546.63 KiB | 1.82 MiB/s, done.
+Resolving deltas: 100% (17/17), done.
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24
+$ cd gradle-junit-jacoco/
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/gradle-junit-jacoco (master)
+$  gradle clean test
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file 'C:\Users\Admin\slf-p1-b2-mar24\gradle-junit-jacoco\build.gradle' line: 18
+
+* What went wrong:
+A problem occurred evaluating root project 'JunitJacocoExample'.
+> Could not find method enabled() for arguments [false] on Report xml of type org.gradle.api.reporting.internal.TaskGeneratedSingleFileReport.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1s
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/gradle-junit-jacoco (master)
+$  gradle clean test
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file 'C:\Users\Admin\slf-p1-b2-mar24\gradle-junit-jacoco\build.gradle' line: 18
+
+* What went wrong:
+A problem occurred evaluating root project 'JunitJacocoExample'.
+> Could not find method enabled() for arguments [false] on Report xml of type org.gradle.api.reporting.internal.TaskGeneratedSingleFileReport.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1s
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/gradle-junit-jacoco (master)
+$  gradle clean test
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 5s
+4 actionable tasks: 4 executed
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/gradle-junit-jacoco (master)
+$   gradle clean test jacocoTestReport
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 6s
+5 actionable tasks: 5 executed
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/gradle-junit-jacoco (master)
+$
+
+
