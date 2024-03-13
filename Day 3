@@ -1,4 +1,176 @@
 Sonarqube token:
+825732d0d77eab89ce731ed0138e54c02dd20269  (authentication token to publish results in sonarqube
+
+Step--1
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24
+$ git clone git@bitbucket.org:practice-devops1/slf-java-b2-p1.git
+Cloning into 'slf-java-b2-p1'...
+remote: Enumerating objects: 153, done.
+remote: Counting objects: 100% (153/153), done.
+remote: Compressing objects: 100% (86/86), done.
+remote: Total 153 (delta 46), reused 153 (delta 46), pack-reused 0
+Receiving objects: 100% (153/153), 60.49 KiB | 2.75 MiB/s, done.
+Resolving deltas: 100% (46/46), done.
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24
+$ ll
+total 4
+drwxr-xr-x 1 Admin 197121 0 Mar 12 21:24 slf-java-b2-p1/
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24
+$ cd "C:\Users\Admin\slf-p1-b2-mar24\slf-java-b2-p1"
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ gradle war
+bash: gradle: command not found
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$
+
+
+
+Step-2
+
+
+Admin@DESKTOP-32CE68O MINGW64 /
+$ cd "C:\Users\Admin\slf-p1-b2-mar24\slf-java-b2-p1"
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ gradle war
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Directory 'C:\Users\Admin\slf-p1-b2-mar24\slf-java-b2-p1' does not contain a Gradle build.
+
+A Gradle build should contain a 'settings.gradle' or 'settings.gradle.kts' file in its root directory. It may also contain a 'build.gradle' or 'build.gradle.kts' file.
+
+To create a new Gradle build in this directory run 'gradle init'
+
+For more information about the 'init' task, please refer to https://docs.gradle.org/8.6/userguide/build_init_plugin.html in the Gradle documentation.
+
+For more details on creating a Gradle build, please refer to https://docs.gradle.org/8.6/userguide/tutorial_using_tasks.html in the Gradle documentation.
+
+* Try:
+> Run gradle init to create a new Gradle build in this directory.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 10s
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ls
+Dockerfile  Procfile  README.md  build.gradle.txt  pom.xml  src/  system.properties
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ls
+Dockerfile  Procfile  README.md  build.gradle.txt  pom.xml  src/  system.properties
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ls
+Dockerfile  Procfile  README.md  build.gradle  pom.xml  src/  system.properties
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ gradle war
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 22s
+3 actionable tasks: 3 executed
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ export SONAR_TOKEN=825732d0d77eab89ce731ed0138e54c02dd20269
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ echo $SONAR_TOKEN
 825732d0d77eab89ce731ed0138e54c02dd20269
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ^C
+
+
+
+Url to Import repository fromm GitHub to Bitbucket: https://github.com/kul-samples/java-2.git 
+
+Clone the entire repository in yourr local system parallel to you first repo `git clone git@bitbucket.org:thinknyx/sfl-java-b2-p1.git`
+
+create build.gradle with the below code under cloned repository
+
+apply plugin: "java"
+apply plugin: "war"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+	implementation "org.springframework.boot:spring-boot-starter-web:1.3.5.RELEASE"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa:1.3.5.RELEASE"
+	implementation "org.springframework.boot:spring-boot-starter-security:1.3.5.RELEASE"
+	implementation "org.springframework.boot:spring-boot-devtools:1.3.5.RELEASE"
+	implementation "org.hsqldb:hsqldb:2.7.2"
+	implementation "org.springframework.boot:spring-boot-starter-tomcat:1.3.5.RELEASE"
+	implementation "org.apache.tomcat.embed:tomcat-embed-jasper:11.0.0-M13"
+	implementation "javax.servlet:jstl:1.2"    
+    implementation "javax.servlet:javax.servlet-api:3.1.0"
+}
+
+
+install java:
+
+https://www.oracle.com/java/technologies/downloads/#java11-windows
+
+https://www.oracle.com/java/technologies/downloads/#license-lightbox
+
+
+Download Gradle:
+https://gradle.org/next-steps/?version=8.6&format=bin
+extract in somepath: c:\tools
+add c:\tools\gradle\bin in path variables for both User & System
+
+
+gradle war
+
+Create account on https://sonarcloud.io/
+
+
+
+Setup SONAR_TOKEN in git bash using export SONAR_TOKEN=<your-token-value>
+
+
+
+
+
+######################################################################################
+
+export https://github.com/kmayer10/gradle-junit-jacoco.git in bitbucket 
+
+
+  208  git clone git@bitbucket.org:thinknyx/gradle-junit-jacoco.git
+  209  cd gradle-junit-jacoco/
+  210  gradle clean test
+  211  gradle clean test jacocoTestReport
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
