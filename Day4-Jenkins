@@ -124,6 +124,99 @@ $
 ########################################################################################################
 Snapshots in onenote
 
+Create account on https://sonarcloud.io/
+
+
+
+Setup SONAR_TOKEN in git bash using export SONAR_TOKEN=
+
+add below property in build.gradle
+property "sonar.qualitygate.wait", true
+
+and then run gradle sonar again
+
+
+=============================================================================================
+
+plugins {
+  id "org.sonarqube" version "4.4.1.3373"
+}
+
+apply plugin: "java"
+apply plugin: "jacoco"
+apply plugin: "war"
+
+repositories {
+    jcenter()
+}
+
+sonar {
+  properties {
+    property "sonar.projectKey", "thinknyx_sfl-java-b2-p1"
+    property "sonar.organization", "thinknyx"
+    property "sonar.host.url", "https://sonarcloud.io"
+    property "sonar.qualitygate.wait", true
+  }
+}
+
+jacocoTestReport{
+    reports {
+        xml.required = true
+        csv.required = true
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+dependencies {
+	implementation "org.springframework.boot:spring-boot-starter-web:1.3.5.RELEASE"
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa:1.3.5.RELEASE"
+	implementation "org.springframework.boot:spring-boot-starter-security:1.3.5.RELEASE"
+	implementation "org.springframework.boot:spring-boot-devtools:1.3.5.RELEASE"
+	implementation "org.hsqldb:hsqldb:2.7.2"
+	implementation "org.springframework.boot:spring-boot-starter-tomcat:1.3.5.RELEASE"
+	implementation "org.apache.tomcat.embed:tomcat-embed-jasper:11.0.0-M13"
+	implementation "javax.servlet:jstl:1.2"    
+  implementation "javax.servlet:javax.servlet-api:3.1.0"
+}
+
+
+============================================================================================================================
+
+
+
+
+export https://github.com/kmayer10/gradle-junit-jacoco.git in bitbucket 
+
+
+  208  git clone git@bitbucket.org:thinknyx/gradle-junit-jacoco.git
+  209  cd gradle-junit-jacoco/
+  210  gradle clean test
+  211  gradle clean test jacocoTestReport
+
+
+
+
+=============================================================================
+
+
+#!/bin/bash
+mkdir -p /tmp/kul
+cd /tmp/kul
+echo "[INFO] I am here at `date`"
+echo "Kulbhushan Mayer" >> out.txt
+sleep 15
+
+
+
+====================================
+
+
+#!/bin/bash
+echo "[INFO] current location is `pwd`" > out.txt
+echo "[INFO] I am here at `date`" >> out.txt
+echo "[INFO] I am Kulbhushan Mayer" >> out.txt
+sleep 15
+
 
 
 
