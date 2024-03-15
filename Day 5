@@ -1,0 +1,103 @@
+Jenkins URL: http://3.17.216.216:8080/
+
+
+Add Jenkinsfile in git repository
+
+pipeline {
+    agent any
+    stages {
+        stage ('Compile & Unit Test') {
+            steps {
+                bat 'gradle clean test'
+            }
+        }
+    }
+}
+
+
+
+
+
+
+======================================================
+
+
+pipeline {
+    agent {
+        label 'gradle_kul'
+    }
+    stages {
+        stage ('Compile & Unit Test') {
+            steps {
+                bat 'gradle clean test'
+            }
+            post {
+                success {
+                    junit allowEmptyResults: true, keepProperties: true, stdioRetention: '', testResults: 'build/test-results/test/*.xml'
+                }
+            }
+        }
+    }
+}
+
+
+==========================================================
+
+
+pipeline {
+    agent {
+        label 'gradle_kul_personel'
+    }
+    stages {
+        stage ('Compile & Unit Test') {
+            steps {
+                bat 'gradle clean test'
+            }
+            post {
+                success {
+                    junit allowEmptyResults: true, keepProperties: true, stdioRetention: '', testResults: 'build/test-results/test/*.xml'
+                }
+            }
+        }
+        stage ('Sonar Analysis') {
+            steps {
+                bat 'gradle clean test sonar'
+            }
+        }
+    }
+}
+
+==============================================================
+
+
+pipeline {
+    agent {
+        label 'gradle_kul_personel'
+    }
+    stages {
+        stage ('Compile & Unit Test') {
+            steps {
+                bat 'gradle clean test'
+            }
+            post {
+                success {
+                    junit allowEmptyResults: true, keepProperties: true, stdioRetention: '', testResults: 'build/test-results/test/*.xml'
+                }
+            }
+        }
+        stage ('Sonar Analysis') {
+            steps {
+                bat 'gradle clean test sonar'
+            }
+        }
+        stage ('Package') {
+            steps {
+                bat 'gradle war'
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: 'build/libs/*.war', followSymlinks: false
+                }
+            }
+        }
+    }
