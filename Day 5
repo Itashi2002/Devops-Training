@@ -101,3 +101,198 @@ pipeline {
             }
         }
     }
+
+
+
+
+
+###############################################################################################################################################################################################################################
+
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ vi Jenkinsfile
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ cat Jenkinsfile
+pipeline {
+    agent any
+    stages {
+        stage ('Compile & Unit Test') {
+            steps {
+                bat 'gradle clean test'
+            }
+        }
+    }
+}
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ls
+Dockerfile   Procfile   build/        pom.xml  system.properties
+Jenkinsfile  README.md  build.gradle  src/
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        Jenkinsfile
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git add .
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git commit -m "Jenkinsfile added"
+[master 8eb283c] Jenkinsfile added
+ 1 file changed, 10 insertions(+)
+ create mode 100644 Jenkinsfile
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git push origin master
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 364 bytes | 364.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+To bitbucket.org:practice-devops1/slf-java-b2-p1.git
+   9a8c281..8eb283c  master -> master
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ vi Jenkinsfile
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ vi Jenkinsfile
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   Jenkinsfile
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git a
+add        am         apply      archive    askpass    askyesno
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git add .
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git commit -m "label and junit updated"
+[master 4d14e03] label and junit updated
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git push origin master
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 464 bytes | 464.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+To bitbucket.org:practice-devops1/slf-java-b2-p1.git
+   8eb283c..4d14e03  master -> master
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ vi Jenkinsfile
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   Jenkinsfile
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git add .
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git commit -m "added updation jenkinsfile using env "
+[master f36ae93] added updation jenkinsfile using env
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git push origin amster
+error: src refspec amster does not match any
+error: failed to push some refs to 'bitbucket.org:practice-devops1/slf-java-b2-p1.git'
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git push origin master
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 357 bytes | 357.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+To bitbucket.org:practice-devops1/slf-java-b2-p1.git
+   4d14e03..f36ae93  master -> master
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ vi Jenkinsfile
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git add .
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git commit -m "added new stage"
+[master e5c1e83] added new stage
+ 1 file changed, 11 insertions(+)
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git push origin master
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 383 bytes | 383.00 KiB/s, done.
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+To bitbucket.org:practice-devops1/slf-java-b2-p1.git
+   f36ae93..e5c1e83  master -> master
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ ls
+Dockerfile  Jenkinsfile  Procfile  README.md  build/  build.gradle  pom.xml  src/  system.properties
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ cd build
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1/build (master)
+$ ls
+classes/  generated/  resources/  tmp/
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1/build (master)
+$ cd ..
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git tag v2.1
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git push v2.1
+fatal: 'v2.1' does not appear to be a git repository
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+$ git push origin v2.1
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To bitbucket.org:practice-devops1/slf-java-b2-p1.git
+ * [new tag]         v2.1 -> v2.1
+
+Admin@DESKTOP-32CE68O MINGW64 ~/slf-p1-b2-mar24/slf-java-b2-p1 (master)
+
