@@ -1,0 +1,573 @@
+PS C:\training> cd day3-ansible
+PS C:\training\day3-ansible> ssh -i c:\users\admin\.ssh\itashinew.pem ubuntu@3.12.161.58 
+The authenticity of host '3.12.161.58 (3.12.161.58)' can't be established.  
+ECDSA key fingerprint is SHA256:Ox5zB9hDb7bPdixEpln+5wVn535Buow3keslEeJG+Pc.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes    
+Warning: Permanently added '3.12.161.58' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 6.5.0-1016-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com     
+ * Support:        https://ubuntu.com/pro
+
+  System information as of Thu Apr  4 05:10:22 UTC 2024
+
+  System load:  0.0                Processes:             96
+  Usage of /:   11.0% of 14.36GB   Users logged in:       0
+  Memory usage: 9%                 IPv4 address for eth0: 172.31.8.49
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.       
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.       
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+
+Last login: Thu Apr  4 04:59:11 2024 from 103.119.167.79
+ubuntu@thinknyx-appnode-Itashi:~$ sudo su -
+root@thinknyx-appnode-Itashi:~# cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+> overlay
+> br_netfilter
+> EOF
+overlay
+br_netfilter
+root@thinknyx-appnode-Itashi:~# cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+> overlay
+> br_netfilter
+> ^C
+root@thinknyx-appnode-Itashi:~# sudo modprobe overlay && sudo modprobe br_netfilter
+root@thinknyx-appnode-Itashi:~# cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+> net.bridge.bridge-nf-call-iptables  = 1
+> net.bridge.bridge-nf-call-ip6tables = 1
+> net.ipv4.ip_forward                 = 1
+> EOF
+net.bridge.bridge-nf-call-iptables  = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward                 = 1
+root@thinknyx-appnode-Itashi:~#
+root@thinknyx-appnode-Itashi:~# sudo sysctl --system
+* Applying /etc/sysctl.d/10-console-messages.conf ...
+kernel.printk = 4 4 1 7
+* Applying /etc/sysctl.d/10-ipv6-privacy.conf ...
+net.ipv6.conf.all.use_tempaddr = 2
+net.ipv6.conf.default.use_tempaddr = 2
+* Applying /etc/sysctl.d/10-kernel-hardening.conf ...
+kernel.kptr_restrict = 1
+* Applying /etc/sysctl.d/10-magic-sysrq.conf ...
+kernel.sysrq = 176
+* Applying /etc/sysctl.d/10-network-security.conf ...
+net.ipv4.conf.default.rp_filter = 2
+net.ipv4.conf.all.rp_filter = 2
+* Applying /etc/sysctl.d/10-ptrace.conf ...
+kernel.yama.ptrace_scope = 1
+* Applying /etc/sysctl.d/10-zeropage.conf ...
+vm.mmap_min_addr = 65536
+* Applying /usr/lib/sysctl.d/50-default.conf ...
+kernel.core_uses_pid = 1
+net.ipv4.conf.default.rp_filter = 2
+net.ipv4.conf.default.accept_source_route = 0
+sysctl: setting key "net.ipv4.conf.all.accept_source_route": Invalid argument
+net.ipv4.conf.default.promote_secondaries = 1
+sysctl: setting key "net.ipv4.conf.all.promote_secondaries": Invalid argument
+net.ipv4.ping_group_range = 0 2147483647
+net.core.default_qdisc = fq_codel
+fs.protected_hardlinks = 1
+fs.protected_symlinks = 1
+fs.protected_regular = 1
+fs.protected_fifos = 1
+* Applying /usr/lib/sysctl.d/50-pid-max.conf ...
+kernel.pid_max = 4194304
+* Applying /etc/sysctl.d/99-cloudimg-ipv6.conf ...
+net.ipv6.conf.all.use_tempaddr = 0
+net.ipv6.conf.default.use_tempaddr = 0
+* Applying /usr/lib/sysctl.d/99-protect-links.conf ...
+fs.protected_fifos = 1
+fs.protected_hardlinks = 1
+fs.protected_regular = 2
+fs.protected_symlinks = 1
+* Applying /etc/sysctl.d/99-sysctl.conf ...
+* Applying /etc/sysctl.d/k8s.conf ...
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward = 1
+* Applying /etc/sysctl.conf ...
+root@thinknyx-appnode-Itashi:~# apt-get update && apt-get install -y software-properties-common curl
+Hit:1 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates InRelease [119 kB]
+Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports InRelease [109 kB]
+Get:4 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:5 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [14.1 MB]
+Get:6 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
+Get:7 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]
+Get:8 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
+Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
+Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
+Get:11 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [1519 kB]
+Get:12 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [293 kB]
+Get:13 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [1644 kB]
+Get:14 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [274 kB]
+Get:15 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1060 kB]
+Get:16 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [241 kB]
+Get:17 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [22.1 kB]
+Get:18 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [49.6 kB]
+Get:19 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [12.0 kB]
+Get:20 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [472 B]
+Get:21 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [67.1 kB]
+Get:22 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.0 kB]
+Get:23 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [388 B]
+Get:24 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1303 kB]
+Get:25 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 c-n-f Metadata [116 B]
+Get:26 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [28.4 kB]
+Get:27 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.2 kB]
+Get:28 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [644 B]
+Get:29 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 c-n-f Metadata [116 B]
+Get:30 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [233 kB]
+Get:31 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [1616 kB]
+Get:32 http://security.ubuntu.com/ubuntu jammy-security/restricted Translation-en [271 kB]
+Get:33 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [852 kB]
+Get:34 http://security.ubuntu.com/ubuntu jammy-security/universe Translation-en [163 kB]
+Get:35 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Metadata [16.8 kB]
+Get:36 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [37.1 kB]
+Get:37 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [7476 B]
+Get:38 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [260 B]
+Fetched 30.4 MB in 6s (5132 kB/s) 
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+software-properties-common is already the newest version (0.99.22.9).
+software-properties-common set to manually installed.
+The following packages will be upgraded:
+  curl libcurl4
+2 upgraded, 0 newly installed, 0 to remove and 20 not upgraded.
+Need to get 484 kB of archives.
+After this operation, 0 B of additional disk space will be used.
+Get:1 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 curl amd64 7.81.0-1ubuntu1.16 [194 kB]
+Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libcurl4 amd64 7.81.0-1ubuntu1.16 [290 kB]
+Fetched 484 kB in 0s (12.1 MB/s)
+(Reading database ... 65283 files and directories currently installed.)
+Preparing to unpack .../curl_7.81.0-1ubuntu1.16_amd64.deb ...
+Unpacking curl (7.81.0-1ubuntu1.16) over (7.81.0-1ubuntu1.15) ...
+Preparing to unpack .../libcurl4_7.81.0-1ubuntu1.16_amd64.deb ...
+Unpacking libcurl4:amd64 (7.81.0-1ubuntu1.16) over (7.81.0-1ubuntu1.15) ...
+Setting up libcurl4:amd64 (7.81.0-1ubuntu1.16) ...
+Setting up curl (7.81.0-1ubuntu1.16) ...
+Processing triggers for man-db (2.10.2-1) ...
+Processing triggers for libc-bin (2.35-0ubuntu3.6) ...
+Scanning processes...
+Scanning linux images...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+root@thinknyx-appnode-Itashi:~# KUBERNETES_VERSION=v1.29 && PROJECT_PATH=prerelease:/main
+root@thinknyx-appnode-Itashi:~#  curl -fsSL https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/Release.key |     gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+root@thinknyx-appnode-Itashi:~# echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/$KUBERNETES_VERSION/deb/ /" |     tee /etc/apt/sources.list.d/kubernetes.list
+deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /
+root@thinknyx-appnode-Itashi:~#  curl -fsSL https://pkgs.k8s.io/addons:/cri-o:/$PROJECT_PATH/deb/Release.key |     gpg --dearmor -o /etc/apt/keyrings/cri-o-apt-keyring.gpg     
+root@thinknyx-appnode-Itashi:~# echo "deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/$PROJECT_PATH/deb/ /" |     tee /etc/apt/sources.list.d/cri-o.list
+deb [signed-by=/etc/apt/keyrings/cri-o-apt-keyring.gpg] https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb/ /
+root@thinknyx-appnode-Itashi:~# apt-get update
+Hit:1 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy InRelease
+Hit:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-updates InRelease
+Hit:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy-backports InRelease
+Hit:6 http://security.ubuntu.com/ubuntu jammy-security InRelease
+Get:4 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/addons:/cri-o:/prerelease:/main/deb  InRelease [1197 B]
+Get:5 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.29/deb  InRelease [1186 B]
+Get:7 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/addons:/cri-o:/prerelease:/main/deb  Packages [1611 B]
+Get:8 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.29/deb  Packages [6511 B]
+Fetched 10.5 kB in 1s (11.9 kB/s)
+Reading package lists... Done
+root@thinknyx-appnode-Itashi:~# apt-get install -y cri-o kubelet kubeadm kubectl
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  conntrack cri-tools ebtables kubernetes-cni socat
+The following NEW packages will be installed:
+  conntrack cri-o cri-tools ebtables kubeadm kubectl kubelet kubernetes-cni socat
+0 upgraded, 9 newly installed, 0 to remove and 20 not upgraded.
+Need to get 112 MB of archives.
+After this operation, 419 MB of additional disk space will be used.
+Get:1 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy/main amd64 conntrack amd64 1:1.4.6-2build2 [33.5 kB]
+Get:2 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy/main amd64 ebtables amd64 2.0.11-4build2 [84.9 kB]
+Get:3 http://us-east-2.ec2.archive.ubuntu.com/ubuntu jammy/main amd64 socat amd64 1.7.4.1-3ubuntu4 [349 kB]
+Get:4 https://pkgs.k8s.io/addons:/cri-o:/prerelease:/main/deb  cri-o 1.30.0~dev-52.1 [19.2 MB]
+Get:5 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.29/deb  cri-tools 1.29.0-1.1 [20.1 MB]
+Get:6 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.29/deb  kubernetes-cni 1.3.0-1.1 [31.4 MB]
+Get:7 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.29/deb  kubelet 1.29.3-1.1 [19.8 MB]
+Get:8 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.29/deb  kubectl 1.29.3-1.1 [10.5 MB]
+Get:9 https://prod-cdn.packages.k8s.io/repositories/isv:/kubernetes:/core:/stable:/v1.29/deb  kubeadm 1.29.3-1.1 [10.1 MB]
+Fetched 112 MB in 2s (51.5 MB/s)
+Selecting previously unselected package cri-o.
+(Reading database ... 65283 files and directories currently installed.)
+Preparing to unpack .../0-cri-o_1.30.0~dev-52.1_amd64.deb ...
+Unpacking cri-o (1.30.0~dev-52.1) ...
+Selecting previously unselected package conntrack.
+Preparing to unpack .../1-conntrack_1%3a1.4.6-2build2_amd64.deb ...
+Unpacking conntrack (1:1.4.6-2build2) ...
+Selecting previously unselected package cri-tools.
+Preparing to unpack .../2-cri-tools_1.29.0-1.1_amd64.deb ...
+Unpacking cri-tools (1.29.0-1.1) ...
+Selecting previously unselected package ebtables.
+Preparing to unpack .../3-ebtables_2.0.11-4build2_amd64.deb ...
+Unpacking ebtables (2.0.11-4build2) ...
+Selecting previously unselected package kubernetes-cni.
+Preparing to unpack .../4-kubernetes-cni_1.3.0-1.1_amd64.deb ...
+Unpacking kubernetes-cni (1.3.0-1.1) ...
+Selecting previously unselected package socat.
+Preparing to unpack .../5-socat_1.7.4.1-3ubuntu4_amd64.deb ...
+Unpacking socat (1.7.4.1-3ubuntu4) ...
+Selecting previously unselected package kubelet.
+Preparing to unpack .../6-kubelet_1.29.3-1.1_amd64.deb ...
+Unpacking kubelet (1.29.3-1.1) ...
+Selecting previously unselected package kubectl.
+Preparing to unpack .../7-kubectl_1.29.3-1.1_amd64.deb ...
+Unpacking kubectl (1.29.3-1.1) ...
+Selecting previously unselected package kubeadm.
+Preparing to unpack .../8-kubeadm_1.29.3-1.1_amd64.deb ...
+Unpacking kubeadm (1.29.3-1.1) ...
+Setting up conntrack (1:1.4.6-2build2) ...
+Setting up cri-o (1.30.0~dev-52.1) ...
+Setting up kubectl (1.29.3-1.1) ...
+Setting up ebtables (2.0.11-4build2) ...
+Setting up socat (1.7.4.1-3ubuntu4) ...
+Setting up cri-tools (1.29.0-1.1) ...
+Setting up kubernetes-cni (1.3.0-1.1) ...
+Setting up kubelet (1.29.3-1.1) ...
+Setting up kubeadm (1.29.3-1.1) ...
+Processing triggers for man-db (2.10.2-1) ...
+Scanning processes...
+Scanning linux images...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+root@thinknyx-appnode-Itashi:~# kubeadm version && kubelet --version && crio --version
+kubeadm version: &version.Info{Major:"1", Minor:"29", GitVersion:"v1.29.3", GitCommit:"6813625b7cd706db5bc7388921be03071e1a492d", GitTreeState:"clean", BuildDate:"2024-03-15T00:06:16Z", GoVersion:"go1.21.8", Compiler:"gc", Platform:"linux/amd64"}
+Kubernetes v1.29.3
+crio version 1.30.0
+Version:        1.30.0
+GitCommit:      0d2b542b20c006ba14b4feece7f1a226bda11df8
+GitCommitDate:  2024-04-01T20:44:45Z
+GitTreeState:   clean
+BuildDate:      1970-01-01T00:00:00Z
+GoVersion:      go1.22.0
+Compiler:       gc
+Platform:       linux/amd64
+Linkmode:       static
+BuildTags:
+  static
+  netgo
+  osusergo
+  exclude_graphdriver_btrfs
+  exclude_graphdriver_devicemapper
+  seccomp
+  apparmor
+  selinux
+LDFlags:          unknown
+SeccompEnabled:   true
+AppArmorEnabled:  true
+
+root@thinknyx-appnode-Itashi:~# systemctl start crio.service
+root@thinknyx-appnode-Itashi:~# exit
+logout
+ubuntu@thinknyx-appnode-Itashi:~$ sudo kubeadm join 172.31.21.188:6443 --token h9h16z.tzef1to067lpki0l --discovery-token-ca-cert-hash sha256:82e2e97bacca152965e84793510faacb22765887cdf2478993b7da80a83b8894
+[preflight] Running pre-flight checks
+[preflight] Reading configuration from the cluster...
+[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Starting the kubelet
+[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
+
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+: connect: connection refused
+E0404 06:25:17.650329   10667 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused   
+E0404 06:25:17.651344   10667 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused   
+E0404 06:25:17.651757   10667 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused   
+E0404 06:25:17.653249   10667 memcache.go:265] couldn't get current server API group list: Get "http://localhost:8080/api?timeout=32s": dial tcp 127.0.0.1:8080: connect: connection refused   
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get nodes
+NAME                         STATUS   ROLES           AGE    VERSION
+thinknyx-appnode-akshay      Ready    <none>          40m    v1.29.3
+thinknyx-appnode-dipesh      Ready    <none>          40m    v1.29.3
+thinknyx-appnode-fatima      Ready    <none>          18m    v1.29.3
+thinknyx-appnode-itashi      Ready    <none>          39m    v1.29.3
+thinknyx-appnode-jessica     Ready    <none>          38m    v1.29.3
+thinknyx-appnode-ksingh      Ready    <none>          40m    v1.29.3
+thinknyx-appnode-kul         Ready    <none>          43m    v1.29.3
+thinknyx-appnode-mansi       Ready    <none>          39m    v1.29.3
+thinknyx-appnode-priti       Ready    <none>          39m    v1.29.3
+thinknyx-appnode-ram         Ready    <none>          39m    v1.29.3
+thinknyx-appnode-sathwika    Ready    <none>          39m    v1.29.3
+thinknyx-appnode-sharan      Ready    <none>          39m    v1.29.3
+thinknyx-appnode-shubender   Ready    <none>          13m    v1.29.3
+thinknyx-appnode-sijo        Ready    <none>          40m    v1.29.3
+thinknyx-appnode-surabhi     Ready    <none>          40m    v1.29.3
+thinknyx-appnode-varun       Ready    <none>          39m    v1.29.3
+thinknyx-control-plane       Ready    control-plane   123m   v1.29.3
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl completion bash > kubectl.sh 
+ubuntu@thinknyx-appnode-Itashi:~$ source /etc/bash_completion
+ubuntu@thinknyx-appnode-Itashi:~$ source kubectl.sh
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl label nodes thinknyx-appnode-itashi node-role.kubernetes.io/itashi=
+node/thinknyx-appnode-itashi labeled
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl label nodes node-name node-role.kubernetes.io/development=
+Error from server (NotFound): nodes "node-name" not found
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl label nodes thinknyx-appnode-itashi node-role.kubernetes.io/development=
+node/thinknyx-appnode-itashi labeled
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get nodes
+NAME                         STATUS   ROLES                 AGE    VERSION
+thinknyx-appnode-akshay      Ready    learning,thinknyx     60m    v1.29.3
+thinknyx-appnode-arun        Ready    thinknyx              104s   v1.29.3
+thinknyx-appnode-dipesh      Ready    Dipesh,learning       60m    v1.29.3
+thinknyx-appnode-fatima      Ready    thinknyx              38m    v1.29.3
+thinknyx-appnode-itashi      Ready    development,itashi    60m    v1.29.3
+thinknyx-appnode-jessica     Ready    learning,thinknyx     59m    v1.29.3
+thinknyx-appnode-ksingh      Ready    AOS,ksingh            60m    v1.29.3
+thinknyx-appnode-kul         Ready    learning,thinknyx     63m    v1.29.3
+thinknyx-appnode-mansi       Ready    learning,thinknyx     60m    v1.29.3
+thinknyx-appnode-priti       Ready    learning,role-priti   59m    v1.29.3
+thinknyx-appnode-ram         Ready    <none>                59m    v1.29.3
+thinknyx-appnode-sathwika    Ready    <none>                60m    v1.29.3
+thinknyx-appnode-sharan      Ready    learning,thinknyx     60m    v1.29.3
+thinknyx-appnode-shubender   Ready    <none>                33m    v1.29.3
+thinknyx-appnode-sijo        Ready    <none>                60m    v1.29.3
+thinknyx-appnode-surabhi     Ready    indiviual             60m    v1.29.3
+thinknyx-appnode-varun       Ready    <none>                60m    v1.29.3
+thinknyx-control-plane       Ready    control-plane         143m   v1.29.3
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl create namespace itashi
+namespace/itashi created
+ubuntu@thinknyx-appnode-Itashi:~$   kubectl get namespaces
+NAME              STATUS   AGE
+akshay            Active   18s
+default           Active   3h2m
+itashi            Active   11s
+jreehal           Active   5s
+kmayer            Active   2m51s
+ksingh            Active   20s
+ksurabhi          Active   23s
+kube-node-lease   Active   3h2m
+kube-public       Active   3h2m
+kube-system       Active   3h2m
+sj                Active   23s
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl config set-context --current --namespace itashi
+Context "kubernetes-admin@kubernetes" modified.
+ubuntu@thinknyx-appnode-Itashi:~$   kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   itashi
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl get pods
+No resources found in itashi namespace.
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods -n default
+No resources found in default namespace.
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods -n kube-public
+No resources found in kube-public namespace.
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods -n kube-node-lease
+No resources found in kube-node-lease namespace.
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl get pods -n kube-system
+NAME                                             READY   STATUS    RESTARTS   AGE
+calico-kube-controllers-787f445f84-t2jzf         1/1     Running   0          176m
+calico-node-4pdgq                                1/1     Running   0          100m
+calico-node-4zcds                                1/1     Running   0          176m
+calico-node-8bgqb                                1/1     Running   0          101m
+calico-node-9bgxw                                1/1     Running   0          101m
+calico-node-bkw6w                                1/1     Running   0          100m
+calico-node-bzl6l                                1/1     Running   0          79m
+calico-node-d7tqd                                1/1     Running   0          100m
+calico-node-dcc2f                                1/1     Running   0          101m
+calico-node-gk47c                                1/1     Running   0          101m
+calico-node-j949d                                1/1     Running   0          100m
+calico-node-jfdjb                                1/1     Running   0          42m
+calico-node-jrnbw                                1/1     Running   0          101m
+calico-node-ln5rf                                1/1     Running   0          100m
+calico-node-pkkrl                                1/1     Running   0          74m
+calico-node-sqfmq                                1/1     Running   0          101m
+calico-node-v9k9z                                1/1     Running   0          99m
+calico-node-wpsr5                                1/1     Running   0          101m
+calico-node-wwr72                                1/1     Running   0          104m
+coredns-76f75df574-mpxbz                         1/1     Running   0          3h4m
+coredns-76f75df574-sb4xg                         1/1     Running   0          3h4m
+etcd-thinknyx-control-plane                      1/1     Running   0          3h4m
+kube-apiserver-thinknyx-control-plane            1/1     Running   0          3h4m
+kube-controller-manager-thinknyx-control-plane   1/1     Running   0          3h4m
+kube-proxy-5mg7v                                 1/1     Running   0          100m
+kube-proxy-6rjkp                                 1/1     Running   0          100m
+kube-proxy-7fbgv                                 1/1     Running   0          100m
+kube-proxy-88jqg                                 1/1     Running   0          104m
+kube-proxy-95bbd                                 1/1     Running   0          100m
+kube-proxy-b277l                                 1/1     Running   0          99m
+kube-proxy-fwjqg                                 1/1     Running   0          42m
+kube-proxy-j22fg                                 1/1     Running   0          3h4m
+kube-proxy-j8k6n                                 1/1     Running   0          101m
+kube-proxy-ld6hx                                 1/1     Running   0          100m
+kube-proxy-ncxqr                                 1/1     Running   0          101m
+kube-proxy-ph2zq                                 1/1     Running   0          101m
+kube-proxy-rmfx2                                 1/1     Running   0          79m
+kube-proxy-rx9cv                                 1/1     Running   0          101m
+kube-proxy-tr9b6                                 1/1     Running   0          74m
+kube-proxy-vblfh                                 1/1     Running   0          101m
+kube-proxy-zhvsj                                 1/1     Running   0          101m
+kube-proxy-zkczn                                 1/1     Running   0          101m
+kube-scheduler-thinknyx-control-plane            1/1     Running   0          3h4m
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl run httpd --image kulbhushanmayer/httpd:1.
+pod/httpd created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl run httpd --image kulbhushanmayer/httpd:1.2
+Error from server (AlreadyExists): pods "httpd" already exists
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME    READY   STATUS         RESTARTS   AGE
+httpd   0/1     ErrImagePull   0          35s
+ubuntu@thinknyx-appnode-Itashi:~$   kubectl get pods -o wide
+NAME    READY   STATUS             RESTARTS   AGE   IP            NODE                      NOMINATED NODE   READINESS GATES
+httpd   0/1     ImagePullBackOff   0          49s   10.10.192.1   thinknyx-appnode-ksingh   <none>           <none>
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl describe pod httpd
+Name:             httpd
+Namespace:        itashi
+Priority:         0
+Service Account:  default
+Node:             thinknyx-appnode-ksingh/172.31.4.130
+Start Time:       Thu, 04 Apr 2024 07:59:04 +0000
+Labels:           run=httpd
+Annotations:      cni.projectcalico.org/containerID: 8af7bdb306a7739b9fc1b933a4d62b6087d854a12824a65833edf709bad0f59d
+                  cni.projectcalico.org/podIP: 10.10.192.1/32
+                  cni.projectcalico.org/podIPs: 10.10.192.1/32
+Status:           Pending
+IP:               10.10.192.1
+IPs:
+  IP:  10.10.192.1
+Containers:
+  httpd:
+    Container ID:
+    Image:          kulbhushanmayer/httpd:1.
+    Image ID:
+    Port:           <none>
+    Host Port:      <none>
+    State:          Waiting
+      Reason:       ErrImagePull
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-glm5w (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-glm5w:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                From               Message
+  ----     ------     ----               ----               -------
+  Normal   Scheduled  59s                default-scheduler  Successfully assigned itashi/httpd to thinknyx-appnode-ksingh
+  Normal   Pulling    20s (x3 over 58s)  kubelet            Pulling image "kulbhushanmayer/httpd:1."
+  Warning  Failed     19s (x3 over 57s)  kubelet            Failed to pull image "kulbhushanmayer/httpd:1.": reading manifest 1. in quay.io/kulbhushanmayer/httpd: unauthorized: access to the 
+requested resource is not authorized
+  Warning  Failed     19s (x3 over 57s)  kubelet            Error: ErrImagePull
+  Normal   BackOff    7s (x4 over 57s)   kubelet            Back-off pulling image "kulbhushanmayer/httpd:1."
+  Warning  Failed     7s (x4 over 57s)   kubelet            Error: ImagePullBackOff
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl delete pod httpd
+pod "httpd" deleted
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl run httpd --image kulbhushanmayer/httpd:1.2
+pod/httpd created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME    READY   STATUS    RESTARTS   AGE
+httpd   1/1     Running   0          37s
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl get pods -o wide
+NAME    READY   STATUS    RESTARTS   AGE   IP             NODE                     NOMINATED NODE   READINESS GATES
+httpd   1/1     Running   0          55s   10.10.11.129   thinknyx-appnode-varun   <none>           <none>
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl describe pod httpd
+Name:             httpd
+Namespace:        itashi
+Priority:         0
+Service Account:  default
+Node:             thinknyx-appnode-varun/172.31.0.48
+Start Time:       Thu, 04 Apr 2024 08:01:05 +0000
+Labels:           run=httpd
+Annotations:      cni.projectcalico.org/containerID: 08137839a0adaaccf04ebac848767ca04dd736b9786b97719dc544272557aefc
+                  cni.projectcalico.org/podIP: 10.10.11.129/32
+                  cni.projectcalico.org/podIPs: 10.10.11.129/32
+Status:           Running
+IP:               10.10.11.129
+IPs:
+  IP:  10.10.11.129
+Containers:
+  httpd:
+    Container ID:   cri-o://7b91014d0573521bf62160e254392525bbf3c91977f2fcda051af1a00f4e2474
+    Image:          kulbhushanmayer/httpd:1.2
+    Image ID:       docker.io/kulbhushanmayer/httpd@sha256:442eb4dc5ec492a4d25c0835fde24c38619dbaea18731bc8c5c093b6c57672cc
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Thu, 04 Apr 2024 08:01:15 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7t96q (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-7t96q:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  73s   default-scheduler  Successfully assigned itashi/httpd to thinknyx-appnode-varun
+  Normal  Pulling    72s   kubelet            Pulling image "kulbhushanmayer/httpd:1.2"
+  Normal  Pulled     63s   kubelet            Successfully pulled image "kulbhushanmayer/httpd:1.2" in 9.021s (9.021s including waiting)
+  Normal  Created    63s   kubelet            Created container httpd
+  Normal  Started    63s   kubelet            Started container httpd
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods -o wide
+NAME    READY   STATUS    RESTARTS   AGE     IP             NODE                     NOMINATED NODE   READINESS GATES
+httpd   1/1     Running   0          6m40s   10.10.11.129   thinknyx-appnode-varun   <none>           <none>
+ubuntu@thinknyx-appnode-Itashi:~$ Connection to 3.12.161.58 closed by remote host.
+Connection to 3.12.161.58 closed.
+
+
