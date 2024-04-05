@@ -1,0 +1,1207 @@
+cmd line:
+
+PS C:\training> cd day3-Ansible
+PS C:\training\day3-Ansible> ssh -i c:\users\admin\.ssh\itashinew.pem ubuntu@3.133.158.189
+The authenticity of host '3.133.158.189 (3.133.158.189)' can't be established.
+ECDSA key fingerprint is SHA256:Ox5zB9hDb7bPdixEpln+5wVn535Buow3keslEeJG+Pc.  
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '3.133.158.189' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 6.5.0-1016-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+apiVersion: v1
+ * Support:        https://ubuntu.com/pro
+
+  System information as of Fri Apr  5 03:47:08 UTC 2024
+
+  System load:  0.03564453125      Processes:              119
+  Usage of /:   20.6% of 14.36GB   Users logged in:        0
+  Memory usage: 19%                IPv4 address for eth0:  172.31.8.49
+  Swap usage:   0%                 IPv4 address for tunl0: 10.10.102.64
+
+ * Ubuntu Pro delivers the most comprehensive open source security and
+   compliance features.
+
+   https://ubuntu.com/aws/pro
+
+apiVersion: v1
+Expanded Security Maintenance for Applications is not enabled.
+
+6 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Thu Apr  4 06:36:06 2024 from 172.31.21.188
+ubuntu@thinknyx-appnode-Itashi:~$ ls
+kubectl.sh
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl describe namespaces itashi
+Name:         itashi
+Labels:       kubernetes.io/metadata.name=itashi
+Annotations:  <none>
+Status:       Active
+
+No resource quota.
+
+No LimitRange resource.
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f kmayer.yml
+error: the path "kmayer.yml" does not exist
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/kmayer created
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl describe namespaces itashi
+Name:         itashi
+Labels:       kubernetes.io/metadata.name=itashi
+Annotations:  <none>
+Status:       Active
+
+Resource Quotas
+  Name:     itashi
+  Resource  Used  Hard
+  --------  ---   ---
+  cpu       0     2
+
+  memory    0     4Gi
+  pods      1     20
+  Name:     kmayer
+    memory: 4Gi
+  Resource  Used  Hard
+kind: ResourceQuota
+  --------  ---   ---
+  cpu       0     2
+  memory    0     4Gi
+  pods      1     20
+
+No LimitRange resource.
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME    READY   STATUS    RESTARTS   AGE
+httpd   1/1     Running   1          20h
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl config get contexta
+error: unknown command "get contexta"
+See 'kubectl config -h' for help and examples
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl config get contexts
+error: unknown command "get contexts"
+See 'kubectl config -h' for help and examples
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl config get-contexts
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   itashi
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl run httpd --image kulbhushanmayer/httpd:1.2
+Error from server (Forbidden): pods "httpd" is forbidden: failed quota: kmayer: must specify cpu for: httpd; memory for: httpd
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl run httpd --image itashi/httpd:1.2
+Error from server (Forbidden): pods "httpd" is forbidden: failed quota: kmayer: must specify cpu for: httpd; memory for: httpd
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yaml
+ubuntu@thinknyx-appnode-Itashi:~$ ls
+itashi.yaml  itashi.yml  kubectl.sh
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl run httpd --image kulbhushanmayer/httpd:1.2
+Error from server (AlreadyExists): pods "httpd" already exists
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl run httpd --image itashi/httpd:1.2
+Error from server (AlreadyExists): pods "httpd" already exists
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl describe pods
+Name:             httpd
+Namespace:        itashi
+Priority:         0
+Service Account:  default
+Node:             thinknyx-appnode-varun/172.31.0.48
+Start Time:       Thu, 04 Apr 2024 08:01:05 +0000
+Labels:           run=httpd
+Annotations:      cni.projectcalico.org/containerID: b1d8aea5228b837f71b1a8d6c8d09343099a4e0d49a0b1b078fb408891f84ec8
+                  cni.projectcalico.org/podIP: 10.10.11.130/32
+                  cni.projectcalico.org/podIPs: 10.10.11.130/32
+Status:           Running
+IP:               10.10.11.130
+IPs:
+  IP:  10.10.11.130
+Containers:
+  httpd:
+    Container ID:   cri-o://481f30ddb52a9753753b2cefe0a100c96a020cbf51d3a0a2e1f03166b9718df4
+    Image:          kulbhushanmayer/httpd:1.2
+    Image ID:       docker.io/kulbhushanmayer/httpd@sha256:442eb4dc5ec492a4d25c0835fde24c38619dbaea18731bc8c5c093b6c57672cc
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Fri, 05 Apr 2024 03:35:50 +0000
+    Ready:          True
+    Restart Count:  1
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7t96q (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-7t96q:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME    READY   STATUS    RESTARTS   AGE
+httpd   1/1     Running   1          20h
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl delete pods httpd
+pod "httpd" deleted
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl run httpd --image itashi/httpd:1.2
+pod/httpd created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl describe pods httpd
+Name:             httpd
+Namespace:        itashi
+Priority:         0
+Service Account:  default
+Node:             thinknyx-appnode-fatima/172.31.11.221
+Start Time:       Fri, 05 Apr 2024 04:54:28 +0000
+Labels:           run=httpd
+Annotations:      cni.projectcalico.org/containerID: a2e4dae4d3e7714052c1e7349806c49b1a0320516d5feeb270a0b0c1547cea48
+                  cni.projectcalico.org/podIP: 10.10.171.195/32
+                  cni.projectcalico.org/podIPs: 10.10.171.195/32
+                  kubernetes.io/limit-ranger: LimitRanger plugin set: cpu, memory request for container httpd; cpu, memory limit for container httpd
+Status:           Pending
+IP:               10.10.171.195
+IPs:
+  IP:  10.10.171.195
+Containers:
+  httpd:
+    Container ID:
+    Image:          itashi/httpd:1.2
+    Image ID:
+    Port:           <none>
+    Host Port:      <none>
+    State:          Waiting
+      Reason:       ImagePullBackOff
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     50m
+      memory:  100Mi
+    Requests:
+      cpu:        25m
+      memory:     50Mi
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-hsjrw (ro)
+Conditions:
+  Type                        Status
+apiVersion: v1
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-hsjrw:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                From               Message
+  ----     ------     ----               ----               -------
+  Normal   Scheduled  45s                default-scheduler  Successfully assigned itashi/httpd to thinknyx-appnode-fatima
+  Normal   BackOff    19s (x2 over 43s)  kubelet            Back-off pulling image "itashi/httpd:1.2"
+  Warning  Failed     19s (x2 over 43s)  kubelet            Error: ImagePullBackOff
+  Normal   Pulling    7s (x3 over 44s)   kubelet            Pulling image "itashi/httpd:1.2"
+  Warning  Failed     6s (x3 over 44s)   kubelet            Failed to pull image "itashi/httpd:1.2": reading manifest 1.2 in quay.io/itashi/httpd: unauthorized: access to the requested resource is not authorized
+  Warning  Failed     6s (x3 over 44s)   kubelet            Error: ErrImagePull
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ cat itashi.yml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+      cpu: 50m
+  name: itashi
+spec:
+  hard:
+    cpu: 2000m
+    memory: 4Gi
+    pods: 20
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: itashi
+spec:
+  limits:
+  - defaultRequest:
+      cpu: 25m
+      memory: 50Mi
+    default:
+      cpu: 50m
+      memory: 100Mi
+    min:
+      cpu: 25m
+      memory: 50Mi
+    max:
+      cpu: 150m
+      memory: 300Mi
+    type: Container
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+Warning: resource pods/httpd is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+The Pod "httpd" is invalid: spec: Forbidden: pod updates may not change fields other than `spec.containers[*].image`,`spec.initContainers[*].image`,`spec.activeDeadlineSeconds`,`spec.tolerations` (only additions to existing tolerations),`spec.terminationGracePeriodSeconds` (allow it to be set to 1 if it was previously negative)
+  core.PodSpec{
+        Volumes:        {{Name: "kube-api-access-hsjrw", VolumeSource: {Projected: &{Sources: {{ServiceAccountToken: &{ExpirationSeconds: 3607, Path: "token"}}, {ConfigMap: &{LocalObjectReference: {Name: "kube-root-ca.crt"}, Items: {{Key: "ca.crt", Path: "ca.crt"}}}}, {DownwardAPI: &{Items: {{Path: "namespace", FieldRef: &{APIVersion: "v1", FieldPath: "metadata.namespace"}}}}}}, 
+DefaultMode: &420}}}},
+        InitContainers: nil,
+        Containers: []core.Container{
+                {
+                        ... // 3 identical fields
+                        Args:       nil,
+                        WorkingDir: "",
+-                       Ports:      nil,
++                       Ports:      []core.ContainerPort{{Name: "httpd", ContainerPort: 80, Protocol: "TCP"}},
+                        EnvFrom:    nil,
+                        Env:        nil,
+                        Resources: core.ResourceRequirements{
+                                Limits: core.ResourceList{
+-                                       s"cpu":    {i: resource.int64Amount{value: 50, scale: -3}, s: "50m", Format: "DecimalSI"},
++                                       s"cpu":    {i: resource.int64Amount{value: 500, scale: -3}, s: "500m", Format: "DecimalSI"},
+-                                       s"memory": {i: resource.int64Amount{value: 104857600}, s: "100Mi", Format: "BinarySI"},
+      cpu: 50m
++                                       s"memory": {i: resource.int64Amount{value: 134217728}, Format: "BinarySI"},
+                                },
+                                Requests: {s"cpu": {i: {...}, s: "25m", Format: "DecimalSI"}, s"memory": {i: {...}, s: "50Mi", Format: "BinarySI"}},
+                                Claims:   nil,
+                        },
+                        ResizePolicy:  nil,
+                        RestartPolicy: nil,
+                        ... // 13 identical fields
+                },
+        },
+        EphemeralContainers: nil,
+        RestartPolicy:       "Always",
+        ... // 28 identical fields
+  }
+
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods\
+> ^C
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME    READY   STATUS             RESTARTS   AGE
+httpd   0/1     ImagePullBackOff   0          26m
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl delete pods httpd
+pod "httpd" deleted
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl apply -f itashi.yml
+resourcequota/itashi configured
+      cpu: 50m
+limitrange/itashi unchanged
+Error from server (Forbidden): error when creating "itashi.yml": pods "httpd" is forbidden: maximum cpu usage per Container is 150m, but limit is 500m
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl describe namespaces kmayer
+Name:         kmayer
+Labels:       kubernetes.io/metadata.name=kmayer
+Annotations:  <none>
+Status:       Active
+
+Resource Quotas
+  Name:     kmayer
+  Resource  Used   Hard
+  --------  ---    ---
+  cpu       100m   2
+  memory    128Mi  4Gi
+  pods      1      20
+
+Resource Limits
+ Type       Resource  Min   Max    Default Request  Default Limit  Max Limit/Request Ratio
+ ----       --------  ---   ---    ---------------  -------------  -----------------------
+ Container  memory    50Mi  300Mi  50Mi             100Mi          -
+ Container  cpu       25m   150m   25m              50m            -
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ cat itashi.yml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: itashi
+spec:
+  hard:
+    cpu: 2000m
+    memory: 4Gi
+    pods: 20
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: itashi
+spec:
+  limits:
+  - defaultRequest:
+      cpu: 25m
+      memory: 50Mi
+    default:
+      cpu: 50m
+      memory: 100Mi
+  - name: httpd
+    min:
+      cpu: 25m
+      memory: 50Mi
+    max:
+      cpu: 150m
+apiVersion: v1
+      memory: 300Mi
+    type: Container
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd
+  labels:
+    name: httpd
+spec:
+  containers:
+  - name: httpd
+    image: itashi/httpd:1.2
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "150m"
+    ports:
+      - containerPort: 80
+        name: httpd
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+error: error parsing itashi.yml: error converting YAML to JSON: yaml: line 17: did not find expected key
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd unchanged
+pod/postgres created
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl get pods
+NAME       READY   STATUS             RESTARTS      AGE
+httpd      0/1     ImagePullBackOff   0             35m
+postgres   0/1     CrashLoopBackOff   2 (25s ago)   43s
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl get pods -o wide
+NAME       READY   STATUS             RESTARTS      AGE   IP              NODE                      NOMINATED NODE   READINESS GATES
+httpd      0/1     ImagePullBackOff   0             35m   10.10.254.132   thinknyx-appnode-akshay   <none>           <none>
+postgres   0/1     Error              3 (35s ago)   53s   10.10.102.70    thinknyx-appnode-itashi   <none>           <none>
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl describe pod postgres
+Name:             postgres
+Namespace:        itashi
+Priority:         0
+Service Account:  default
+Node:             thinknyx-appnode-itashi/172.31.8.49
+Start Time:       Fri, 05 Apr 2024 05:59:26 +0000
+Labels:           name=postgres
+Annotations:      cni.projectcalico.org/containerID: 7a51a848f7abd8cfb7d92fec20df828b64a8ba44d75c258d39963c53a1276ace
+                  cni.projectcalico.org/podIP: 10.10.102.70/32
+                  cni.projectcalico.org/podIPs: 10.10.102.70/32
+Status:           Running
+IP:               10.10.102.70
+IPs:
+  IP:  10.10.102.70
+Containers:
+  postgres:
+    Container ID:   cri-o://5e4736212a5cd7bf9bf0110448b88958f31b794078fd597bb368282c7349ed1f
+    Image:          postgres:13.4
+    Image ID:       docker.io/library/postgres@sha256:1adb50e5c24f550a9e68457a2ce60e9e4103dfc43c3b36e98310168165b443a1
+    Port:           5432/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       CrashLoopBackOff
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Fri, 05 Apr 2024 06:00:12 +0000
+      Finished:     Fri, 05 Apr 2024 06:00:12 +0000
+    Ready:          False
+    Restart Count:  3
+    Limits:
+      cpu:     75m
+      memory:  150Mi
+    Requests:
+      cpu:        75m
+      memory:     150Mi
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-jwkbv (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-jwkbv:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Guaranteed
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                From               Message
+  ----     ------     ----               ----               -------
+  Normal   Scheduled  64s                default-scheduler  Successfully assigned itashi/postgres to thinknyx-appnode-itashi
+  Normal   Pulled     18s (x4 over 63s)  kubelet            Container image "postgres:13.4" already present on machine
+  Normal   Created    18s (x4 over 63s)  kubelet            Created container postgres
+  Normal   Started    18s (x4 over 63s)  kubelet            Started container postgres
+  Warning  BackOff    5s (x6 over 61s)   kubelet            Back-off restarting failed container postgres in pod postgres_itashi(eeeadab4-2364-46ad-81a6-6402077a6376)
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl logs postgres
+Error: Database is uninitialized and superuser password is not specified.
+    ports:
+       You must specify POSTGRES_PASSWORD to a non-empty value for the
+       superuser. For example, "-e POSTGRES_PASSWORD=password" on "docker run".
+
+       You may also use "POSTGRES_HOST_AUTH_METHOD=trust" to allow all
+       connections without a password. This is *not* recommended.
+
+    ports:
+       See PostgreSQL documentation about "trust":
+       https://www.postgresql.org/docs/current/auth-trust.html
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl create secret generic pwd --from-literal PGPASSWORD=p@$$w0rd
+secret/pwd created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get secrets
+NAME   TYPE     DATA   AGE
+pwd    Opaque   1      10s
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl describe secrets pwd
+Name:         pwd
+Namespace:    itashi
+    ports:
+Labels:       <none>
+Annotations:  <none>
+
+Type:  Opaque
+
+Data
+====
+PGPASSWORD:  10 bytes
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl delete pod postgres
+pod "postgres" deleted
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd unchanged
+error: error parsing itashi.yml: error converting YAML to JSON: yaml: line 24: could not find expected ':'
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd unchanged
+The Pod "postgres" is invalid: spec.containers[0].env[0].valueFrom.secretKeyRef.key: Required value
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl delete pod postgres
+Error from server (NotFound): pods "postgres" not found
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl delete pods postgres
+Error from server (NotFound): pods "postgres" not found
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ cat itashi.yml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: itashi
+spec:
+  hard:
+    cpu: 2000m
+    memory: 4Gi
+    pods: 20
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: itashi
+spec:
+  limits:
+  - defaultRequest:
+      cpu: 25m
+      memory: 50Mi
+    default:
+      cpu: 50m
+      memory: 100Mi
+    min:
+      cpu: 25m
+      memory: 50Mi
+    max:
+      cpu: 150m
+      memory: 300Mi
+    type: Container
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd
+  labels:
+    name: httpd
+spec:
+  containers:
+  - name: httpd
+    image: itashi/httpd:1.2
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "150m"
+    ports:
+      - containerPort: 80
+        name: httpd
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres
+  labels:
+    name: postgres
+spec:
+  containers:
+  - name: postgres
+    image: postgres:13.4
+    resources:
+      limits:
+        memory: "150Mi"
+        cpu: "75m"
+    ports:
+      - containerPort: 5432
+    env:
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: pwd
+
+
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd unchanged
+The Pod "postgres" is invalid: spec.containers[0].env[0].valueFrom.secretKeyRef.key: Required value
+ubuntu@thinknyx-appnode-Itashi:~$   kubectl get pods
+NAME    READY   STATUS             RESTARTS   AGE
+httpd   0/1     ImagePullBackOff   0          78m
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl describe pod
+Name:             httpd
+Namespace:        itashi
+Priority:         0
+Service Account:  default
+Node:             thinknyx-appnode-akshay/172.31.9.29
+Start Time:       Fri, 05 Apr 2024 05:24:59 +0000
+Labels:           name=httpd
+Annotations:      cni.projectcalico.org/containerID: 0bee5b2cff651f2e1b770a6cc8aaf056a272e4a483aeaf8b0c59bd2305406d04
+                  cni.projectcalico.org/podIP: 10.10.254.132/32
+                  cni.projectcalico.org/podIPs: 10.10.254.132/32
+Status:           Pending
+IP:               10.10.254.132
+IPs:
+  IP:  10.10.254.132
+Containers:
+  httpd:
+    Container ID:
+    Image:          itashi/httpd:1.2
+    Image ID:
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       ImagePullBackOff
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     150m
+      memory:  128Mi
+    Requests:
+      cpu:        150m
+      - containerPort: 80
+      memory:     128Mi
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-pw27q (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-pw27q:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Guaranteed
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason   Age                   From     Message
+  ----    ------   ----                  ----     -------
+  Normal  BackOff  3m6s (x327 over 78m)  kubelet  Back-off pulling image "itashi/httpd:1.2"
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd unchanged
+pod/postgres created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME       READY   STATUS             RESTARTS   AGE
+httpd      0/1     ImagePullBackOff   0          81m
+postgres   1/1     Running            0          13s
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl describe pod
+Name:             httpd
+Namespace:        itashi
+Priority:         0
+Service Account:  default
+Node:             thinknyx-appnode-akshay/172.31.9.29
+Start Time:       Fri, 05 Apr 2024 05:24:59 +0000
+Labels:           name=httpd
+Annotations:      cni.projectcalico.org/containerID: 0bee5b2cff651f2e1b770a6cc8aaf056a272e4a483aeaf8b0c59bd2305406d04
+                  cni.projectcalico.org/podIP: 10.10.254.132/32
+                  cni.projectcalico.org/podIPs: 10.10.254.132/32
+Status:           Pending
+IP:               10.10.254.132
+IPs:
+  IP:  10.10.254.132
+Containers:
+  httpd:
+    Container ID:
+    Image:          itashi/httpd:1.2
+    Image ID:
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       ImagePullBackOff
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     150m
+      memory:  128Mi
+    Requests:
+      cpu:        150m
+      memory:     128Mi
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-pw27q (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  kube-api-access-pw27q:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Guaranteed
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason   Age                   From     Message
+  ----    ------   ----                  ----     -------
+  Normal  BackOff  113s (x349 over 81m)  kubelet  Back-off pulling image "itashi/httpd:1.2"
+
+
+Name:             postgres
+Namespace:        itashi
+Priority:         0
+Service Account:  default
+Node:             thinknyx-appnode-dipesh/172.31.12.49
+Start Time:       Fri, 05 Apr 2024 06:46:10 +0000
+Labels:           name=postgres
+Annotations:      cni.projectcalico.org/containerID: 4561383600c221dd0c9321b6ddff215e558542e4f576f8f11ed258dfcf02cabb
+                  cni.projectcalico.org/podIP: 10.10.121.70/32
+                  cni.projectcalico.org/podIPs: 10.10.121.70/32
+Status:           Running
+IP:               10.10.121.70
+IPs:
+  IP:  10.10.121.70
+Containers:
+  postgres:
+    Container ID:   cri-o://e0df3fbbf5fab8691bc2a7eaa9bf2595b2aba84fece6538331953160949a6255
+    Image:          postgres:13.4
+    Image ID:       docker.io/library/postgres@sha256:1adb50e5c24f550a9e68457a2ce60e9e4103dfc43c3b36e98310168165b443a1
+    Port:           5432/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Fri, 05 Apr 2024 06:46:10 +0000
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     75m
+      memory:  150Mi
+    Requests:
+      cpu:     75m
+      memory:  150Mi
+    Environment:
+      POSTGRES_PASSWORD:  <set to the key 'PGPASSWORD' in secret 'pwd'>  Optional: false
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-wzw9g:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Guaranteed
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  49s   default-scheduler  Successfully assigned itashi/postgres to thinknyx-appnode-dipesh
+  Normal  Pulled     49s   kubelet            Container image "postgres:13.4" already present on machine
+  Normal  Created    49s   kubelet            Created container postgres
+  Normal  Started    49s   kubelet            Started container postgres
+ubuntu@thinknyx-appnode-Itashi:~$ 
+
+
+
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get service
+No resources found in itashi namespace.
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl apply -f kmayer.yml
+error: the path "kmayer.yml" does not exist
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd unchanged
+pod/postgres unchanged
+service/postgres created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get service
+NAME       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+postgres   ClusterIP   20.20.85.211   <none>        2345/TCP   10s
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl describe service postgres
+Name:              postgres
+Namespace:         itashi
+Labels:            <none>
+Annotations:       <none>
+Selector:          name=postgres
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                20.20.85.211
+IPs:               20.20.85.211
+Port:              postgres  2345/TCP
+TargetPort:        5432/TCP
+Endpoints:         10.10.121.70:5432
+Session Affinity:  None
+Events:            <none>
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl get pods -o wide
+NAME       READY   STATUS             RESTARTS   AGE    IP              NODE                      NOMINATED NODE   READINESS GATES
+httpd      0/1     ImagePullBackOff   0          101m   10.10.254.132   thinknyx-appnode-akshay   <none>           <none>
+postgres   1/1     Running            0          20m    10.10.121.70    thinknyx-appnode-dipesh   <none>           <none>
+ubuntu@thinknyx-appnode-Itashi:~$
+
+###########################################################################################################################################################3
+
+
+
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME       READY   STATUS         RESTARTS   AGE
+httpd      0/1     ErrImagePull   0          123m
+postgres   1/1     Running        0          42m
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f kmayer.yml
+error: the path "kmayer.yml" does not exist
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd unchanged
+pod/postgres unchanged
+service/postgres unchanged
+pod/psql created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME       READY   STATUS              RESTARTS   AGE
+httpd      0/1     ImagePullBackOff    0          124m
+postgres   1/1     Running             0          43m
+psql       0/1     ContainerCreating   0          5s
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl get pods -o wide
+NAME       READY   STATUS             RESTARTS   AGE    IP              NODE                      NOMINATED NODE   READINESS GATES
+httpd      0/1     ImagePullBackOff   0          124m   10.10.254.132   thinknyx-appnode-akshay   <none>           <none>
+postgres   1/1     Running            0          43m    10.10.121.70    thinknyx-appnode-dipesh   <none>           <none>
+psql       1/1     Running            0          15s    10.10.227.71    thinknyx-appnode-kul      <none>           <none>
+ubuntu@thinknyx-appnode-Itashi:~$ cat itashi.yml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: itashi
+spec:
+  hard:
+    cpu: 2000m
+    memory: 4Gi
+    pods: 20
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: itashi
+spec:
+  limits:
+  - defaultRequest:
+      cpu: 25m
+      memory: 50Mi
+    default:
+      cpu: 50m
+      memory: 100Mi
+    min:
+      cpu: 25m
+      memory: 50Mi
+    max:
+      cpu: 150m
+      memory: 300Mi
+    type: Container
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd
+  labels:
+    name: httpd
+spec:
+  containers:
+  - name: httpd
+    image: itashi/httpd:1.2
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "150m"
+    ports:
+      - containerPort: 80
+        name: httpd
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres
+  labels:
+    name: postgres
+spec:
+  containers:
+  - name: postgres
+    image: postgres:13.4
+    resources:
+      limits:
+        memory: "150Mi"
+        cpu: "75m"
+    ports:
+      - containerPort: 5432
+    env:
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: pwd
+          key: PGPASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    name: postgres
+  ports:
+  - port: 2345
+    targetPort: 5432
+    name: postgres
+    protocol: TCP
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: psql
+  labels:
+    name: psql
+spec:
+  containers:
+  - name: psql
+    image: kulbhushanmayer/psql:latest
+    command:
+    - sh
+    - -c
+    - sleep 7200
+    resources:
+      limits:
+        memory: "50Mi"
+        cpu: "50m"
+    envFrom:
+    - secretRef:
+        name: pwd
+    env:
+    - name: PGHOST
+      value: postgres.itashi.svc.thinknyx.org
+
+
+
+ubuntu@thinknyx-appnode-Itashi:~$
+
+
+###########################################
+
+
+ value: postgres.itashi.svc.thinknyx.org
+         pod name. namespace. service(namiung convention).FQDn(fully qualified domIN Name)
+
+
+
+######################
+
+
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl delete pods psql
+pod "psql" deleted
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f kmayer.yml
+error: the path "kmayer.yml" does not exist
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd unchanged
+pod/postgres unchanged
+service/postgres unchanged
+pod/psql created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl exec -it psql -- /bin/bash
+root@psql:/# psql
+psql (16.2 (Ubuntu 16.2-1), server 13.4 (Debian 13.4-4.pgdg110+1))
+Type "help" for help.
+
+postgres=# exit
+root@psql:/# 
+
+
+vi kmayer.yml
+kubectl delete pod psql 
+
+kubectl apply -f kmayer.yml
+kubectl exec -it psql -- /bin/bash
+psql
+exit
+
+
+
+
+
+Final code:
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: itashi
+spec:
+  hard:
+    cpu: 2000m
+    memory: 4Gi
+    pods: 20
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: itashi
+spec:
+  limits:
+  - defaultRequest:
+      cpu: 25m
+      memory: 50Mi
+    default:
+      cpu: 50m
+      memory: 100Mi
+    min:
+      cpu: 25m
+      memory: 50Mi
+    max:
+      cpu: 150m
+      memory: 300Mi
+    type: Container
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd
+  labels:
+    name: httpd
+spec:
+  containers:
+  - name: httpd
+    image: itashi/httpd:1.2
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "150m"
+    ports:
+      - containerPort: 80
+        name: httpd
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres
+  labels:
+    name: postgres
+spec:
+  containers:
+  - name: postgres
+    image: postgres:13.4
+    resources:
+      limits:
+        memory: "150Mi"
+        cpu: "75m"
+    ports:
+      - containerPort: 5432
+    env:
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: pwd
+          key: PGPASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    name: postgres
+  ports:
+  - port: 2345
+    targetPort: 5432
+    name: postgres
+    protocol: TCP
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: psql
+  labels:
+    name: psql
+spec:
+  containers:
+  - name: psql
+    image: kulbhushanmayer/psql:latest
+    command:
+    - sh
+    - -c
+    - sleep 7200
+    resources:
+      limits:
+        memory: "50Mi"
+        cpu: "50m"
+    envFrom:
+    - secretRef:
+        name: pwd
+    env:
+    - name: PGHOST
+      value: postgres.itashi.svc.thinknyx.org
+    - name: PGPORT
+      value: "2345"
+
+
+#################################################################################################################3
+
+ubuntu@thinknyx-appnode-Itashi:~$ vi itashi.yml
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME       READY   STATUS         RESTARTS   AGE
+httpd      0/1     ErrImagePull   0          123m
+postgres   1/1     Running        0          42m
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f kmayer.yml
+error: the path "kmayer.yml" does not exist
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl apply -f itashi.yml
+resourcequota/itashi configured
+limitrange/itashi unchanged
+pod/httpd unchanged
+pod/postgres unchanged
+service/postgres unchanged
+pod/psql created
+ubuntu@thinknyx-appnode-Itashi:~$ kubectl get pods
+NAME       READY   STATUS              RESTARTS   AGE
+httpd      0/1     ImagePullBackOff    0          124m
+postgres   1/1     Running             0          43m
+psql       0/1     ContainerCreating   0          5s
+ubuntu@thinknyx-appnode-Itashi:~$  kubectl get pods -o wide
+NAME       READY   STATUS             RESTARTS   AGE    IP              NODE                      NOMINATED NODE   READINESS GATES
+httpd      0/1     ImagePullBackOff   0          124m   10.10.254.132   thinknyx-appnode-akshay   <none>           <none>
+postgres   1/1     Running            0          43m    10.10.121.70    thinknyx-appnode-dipesh   <none>           <none>
+psql       1/1     Running            0          15s    10.10.227.71    thinknyx-appnode-kul      <none>           <none>
+ubuntu@thinknyx-appnode-Itashi:~$ cat itashi.yml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: itashi
+spec:
+  hard:
+    cpu: 2000m
+    memory: 4Gi
+    pods: 20
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: itashi
+spec:
+  limits:
+  - defaultRequest:
+      cpu: 25m
+      memory: 50Mi
+    default:
+      cpu: 50m
+      memory: 100Mi
+    min:
+      cpu: 25m
+      memory: 50Mi
+    max:
+      cpu: 150m
+      memory: 300Mi
+    type: Container
+---
+apiVersion: v1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
